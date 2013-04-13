@@ -366,7 +366,8 @@ public class Classification {
 
 				setInput(probe.getVector());
 				double output = getOutput();
-				double modifier = calcModifier(probe.getExpected(), output);
+				double expected = (probe.getExpected()==cl)?1:0;
+				double modifier = calcModifier(expected, output);
 				Iterator<Double> it = input.iterator();
 				for (int i = 0; i < inputLength; i++) {
 					if (it.hasNext()) {
