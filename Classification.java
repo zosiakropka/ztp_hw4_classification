@@ -102,6 +102,8 @@ public class Classification {
 		 */
 		public static class Reader {
 
+			private static final String regexp = "[^0-9-]+";
+			
 			/**
 			 *
 			 * @param filename Input file name
@@ -117,9 +119,11 @@ public class Classification {
 				Result result = new Result(n);
 
 				File file = new File(filename);
-				Scanner sc = new Scanner(file);
-				while (sc.hasNextInt()) {
-					int classId = sc.nextInt();
+				Scanner sc = new Scanner(file).useDelimiter(regexp);
+				while (sc.hasNext()) {
+					String classIdString = sc.next();
+					int classId = new Integer(classIdString);
+//					int classId = sc.nextInt();
 					Vector vector = scanVector(sc, n);
 					if (classId != 0) {
 						result.getNN().addProbe(new NeuralNetwork.Probe(classId, vector));
@@ -141,10 +145,12 @@ public class Classification {
 							throws WrongNumbersCountException {
 				Vector vector = new Vector();
 				for (int i = 0; i < n; i++) {
-					if (!sc.hasNextInt()) {
+					if (!sc.hasNext()) {
 						throw new WrongNumbersCountException();
 					}
-					vector.addInt(sc.nextInt());
+					String nextString = sc.next();
+					int next = new Integer(nextString);
+					vector.addInt(next);
 				}
 				return vector;
 			}
