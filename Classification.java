@@ -60,7 +60,7 @@ public class Classification {
 	public static class Vector extends ArrayList<Double> {
 
 		static final long serialVersionUID = 2;
-		Vector normalized = null;
+		private Vector normalized = null;
 
 		void addInt(int value) {
 			this.add((double) value);
@@ -124,7 +124,7 @@ public class Classification {
 			 * @return next vector scanned from file
 			 * @throws Classification.Vector.Reader.WrongNumbersCountException
 			 */
-			static Vector scanVector(Scanner sc, int n)
+			private static Vector scanVector(Scanner sc, int n)
 							throws WrongNumbersCountException {
 				Vector vector = new Vector();
 				for (int i = 0; i < n; i++) {
@@ -211,8 +211,8 @@ public class Classification {
 
 		int inputLength;
 		double learnRatio;
-		ArrayList<Probe> probes;
-		Neuron.Layer neurons;
+		private ArrayList<Probe> probes;
+		private Neuron.Layer neurons;
 
 		/**
 		 * Class holding vector probe. It keeps vector and class that vector is
@@ -220,8 +220,8 @@ public class Classification {
 		 */
 		public static class Probe {
 
-			int expected;
-			Vector vector;
+			private int expected;
+			private Vector vector;
 
 			/**
 			 * Creates probe for vector and its class provided.
@@ -229,8 +229,8 @@ public class Classification {
 			 * @param cls vector's class number
 			 * @param vector vector
 			 */
-			public Probe(int cl, Vector vector) {
-				this.expected = cl;
+			public Probe(int cls, Vector vector) {
+				this.expected = cls;
 				this.vector = vector;
 			}
 
@@ -300,15 +300,14 @@ public class Classification {
 
 		/**
 		 */
-		static class Neuron {
+		private static class Neuron {
 
 			private int cls;
-			int inputLength;
-			double[] weights;
-			Vector input;
-			double bias;
-			double biasWeight;
-			double learnRatio;
+			private int inputLength;
+			private double[] weights;
+			private Vector input;
+			private double bias;
+			private double learnRatio;
 
 			/**
 			 * Creates new neuron for specific class
@@ -402,7 +401,7 @@ public class Classification {
 			 * @param signal
 			 * @return signal activated
 			 */
-			double activationFunction(double signal) {
+			private double activationFunction(double signal) {
 				return 1.0 / (1.0 + Math.exp(-signal));
 			}
 
@@ -412,8 +411,8 @@ public class Classification {
 			public static class Layer extends HashMap<Integer, Neuron> {
 
 				static final long serialVersionUID = 3;
-				int inputLength;
-				double learnRatio;
+				private int inputLength;
+				private double learnRatio;
 
 				/**
 				 * Layer constructor
