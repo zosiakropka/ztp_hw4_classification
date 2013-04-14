@@ -334,8 +334,7 @@ public class Classification {
 					weights[i] = rand.nextDouble();
 				}
 
-				bias = 1.0;
-				biasWeight = 1.0;
+				bias = rand.nextDouble();
 			}
 
 			/**
@@ -405,6 +404,7 @@ public class Classification {
 						tmp += (next * weights[i]);
 					}
 				}
+				tmp += bias;
 				return activationFunction(tmp);
 			}
 
