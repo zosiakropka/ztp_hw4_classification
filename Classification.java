@@ -20,8 +20,8 @@ public class Classification {
 
 	/**
 	 *
-	 * @param input
-	 * @param size
+	 * @param filename Name of the file from which vector shoulb be read
+	 * @param size Period length. size=n+1, where n is vector size.
 	 * @throws FileNotFoundException
 	 * @throws Classification.Vector.Reader.WrongNumbersCountException
 	 */
@@ -38,6 +38,8 @@ public class Classification {
 	}
 
 	/**
+	 * Runs vectors classification via NeuralNetwork for each unclassified vector
+	 * from the file.
 	 *
 	 * @return output expected by homework task
 	 */
@@ -83,15 +85,16 @@ public class Classification {
 		}
 
 		/**
-		 *
+		 * Class to read input file.
 		 */
 		public static class Reader {
 
 			/**
 			 *
-			 * @param filename
-			 * @param n
-			 * @return
+			 * @param filename Input file name
+			 * @param n Vector length
+			 * @return Class holding data read from file, devided into the neural
+			 * network with learning set the and testing set.
 			 * @throws FileNotFoundException
 			 * @throws Classification.Vector.Reader.WrongNumbersCountException
 			 */
@@ -121,7 +124,7 @@ public class Classification {
 			 *
 			 * @param sc
 			 * @param n
-			 * @return
+			 * @return next vector scanned from file
 			 * @throws Classification.Vector.Reader.WrongNumbersCountException
 			 */
 			static Vector scanVector(Scanner sc, int n)
@@ -151,7 +154,8 @@ public class Classification {
 			}
 
 			/**
-			 *
+			 * Class holding result of file scanning - neural network with learning
+			 * vectors and set of testing vectors.
 			 */
 			public static class Result {
 
@@ -159,8 +163,10 @@ public class Classification {
 				Vectors vectors;
 
 				/**
+				 * Creates set of testing vectors and neural network with 0.2 as
+				 * learning ratio.
 				 *
-				 * @param n
+				 * @param n vector size
 				 */
 				public Result(int n) {
 					neuralNetwork = new NeuralNetwork(n, 0.5);
@@ -186,7 +192,7 @@ public class Classification {
 		}
 
 		/**
-		 *
+		 * Class holding whole set of vectors.
 		 */
 		public static class Vectors extends ArrayList<Vector> {
 
@@ -200,7 +206,9 @@ public class Classification {
 	}
 
 	/**
-	 *
+	 * Class representing neural network. It learns based on learning set and when
+	 * learning is finished, it can classify vector to one of the recognized
+	 * classes.
 	 */
 	public static class NeuralNetwork {
 
@@ -210,7 +218,8 @@ public class Classification {
 		Neuron.Layer neurons;
 
 		/**
-		 *
+		 * Class holding vector probe. It keeps vector and class that vector is
+		 * expected to be classified to.
 		 */
 		public static class Probe {
 
@@ -218,9 +227,10 @@ public class Classification {
 			Vector vector;
 
 			/**
+			 * Creates probe for vector and its class provided.
 			 *
-			 * @param cl
-			 * @param vector
+			 * @param cls vector's class number
+			 * @param vector vector
 			 */
 			public Probe(int cl, Vector vector) {
 				this.expected = cl;
@@ -229,7 +239,7 @@ public class Classification {
 
 			/**
 			 *
-			 * @return
+			 * @return vector
 			 */
 			public Vector getVector() {
 				return vector;
@@ -237,7 +247,7 @@ public class Classification {
 
 			/**
 			 *
-			 * @return
+			 * @return class which vector is expected to be classified to
 			 */
 			public int getExpected() {
 				return expected;
@@ -245,8 +255,9 @@ public class Classification {
 		}
 
 		/**
+		 * Adds new probe to neural network learning set.
 		 *
-		 * @param probe
+		 * @param probe probe consisting of vector and expected class
 		 */
 		public void addProbe(Probe probe) {
 			probes.add(probe);
@@ -258,8 +269,11 @@ public class Classification {
 
 		/**
 		 *
-		 * @param inputLength
-		 * @param learnRatio
+		 *
+		 * @param inputLength Size of the input vector.
+		 * @param learnRatio The bigger learnRatio is, the faster network learns,
+		 * but also learning step grows and it it harder for nn to hit the right
+		 * weights values.
 		 */
 		public NeuralNetwork(int inputLength, double learnRatio) {
 			this.learnRatio = learnRatio;
@@ -338,10 +352,12 @@ public class Classification {
 			double learnRatio;
 
 			/**
+			 * Creates new neuron for specific class
 			 *
-			 * @param cl
-			 * @param inputLength
-			 * @param learnRatio
+			 * @param cls class assigned to this neuron.
+			 * @param inputLength input vector size
+			 * @param learnRatio learn ratio as described earlier in NeuralNetwork
+			 * constructor.
 			 */
 			public Neuron(int cl, int inputLength, double learnRatio) {
 				this.cl = cl;
@@ -359,8 +375,9 @@ public class Classification {
 			}
 
 			/**
+			 * Performs single learning based on probe provided.
 			 *
-			 * @param probe
+			 * @param probe probe with learning vector
 			 */
 			public void learn(Probe probe) {
 
@@ -379,9 +396,11 @@ public class Classification {
 			}
 
 			/**
+			 * Calculates weight modifier based on learning ratio and the recognition
+			 * error.
 			 *
-			 * @param expected
-			 * @param received
+			 * @param expected expected value
+			 * @param received received value
 			 * @return
 			 */
 			double calcModifier(double expected, double received) {
@@ -389,14 +408,21 @@ public class Classification {
 			}
 
 			/**
+			 * Adjusts weights based of modifier provided.
 			 *
-			 * @param vector
+			 * @param modifier
+			 */
+			/**
+			 * Sets given vector for learning or recognizing reasons.
+			 *
+			 * @param vector vector to set
 			 */
 			public void setInput(Vector vector) {
 				this.input = vector.normalized();
 			}
 
 			/**
+			 * Gets output based on vector previously set.
 			 *
 			 * @return
 			 */
@@ -412,16 +438,17 @@ public class Classification {
 			}
 
 			/**
+			 * Function modifying output signal.
 			 *
 			 * @param signal
-			 * @return
+			 * @return signal activated
 			 */
 			double activationFunction(double signal) {
 				return 1.0 / (1.0 + Math.exp(-signal));
 			}
 
 			/**
-			 *
+			 * Class representing single network layer.
 			 */
 			public static class Layer extends HashMap<Integer, Neuron> {
 
@@ -430,9 +457,11 @@ public class Classification {
 				double learnRatio;
 
 				/**
+				 * Layer constructor
 				 *
-				 * @param inputLength
-				 * @param learnRatio
+				 * @param inputLength size of the vector input
+				 * @param learnRatio learn ratio as described earlier in NeuralNetwork
+				 * constructor.
 				 */
 				public Layer(int inputLength, double learnRatio) {
 					this.inputLength = inputLength;
