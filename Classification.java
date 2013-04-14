@@ -34,7 +34,7 @@ public class Classification {
 		neuralNetwork = readerResult.getNN();
 		vectors = readerResult.getVectors();
 
-		neuralNetwork.learn();
+		neuralNetwork.teach();
 	}
 
 	/**
@@ -293,26 +293,15 @@ public class Classification {
 		}
 
 		/**
-		 *
+		 * Start teaching neurons based on each probe.
 		 */
-		public void learn() {
+		public void teach() {
 			for (Probe probe : probes) {
-				learn(probe);
+				neurons.teach(probe);
 			}
 		}
 
 		/**
-		 *
-		 * @param probe
-		 */
-		void learn(Probe probe) {
-			for (Integer nxtKey : neurons.keySet()) {
-				neurons.get(nxtKey).learn(probe);
-			}
-		}
-
-		/**
-		 *
 		 */
 		static class Neuron {
 
@@ -451,9 +440,15 @@ public class Classification {
 				}
 
 				/**
-				 *
-				 * @param expected
+				 * Teaches each vector based on probe provided
+				 * 
+				 * @param probe
 				 */
+				public void teach(Probe probe) {
+					for (Integer nxtKey : keySet()) {
+						get(nxtKey).learn(probe);
+					}
+				}
 				public void add(int expected) {
 					if (!contains(expected)) {
 						this.put(expected, new Neuron(expected, inputLength, learnRatio));
