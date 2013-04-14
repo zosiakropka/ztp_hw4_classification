@@ -62,7 +62,7 @@ public class Classification {
 		static final long serialVersionUID = 2;
 		private Vector normalized = null;
 
-		void addInt(int value) {
+		public void addInt(int value) {
 			this.add((double) value);
 		}
 
@@ -360,7 +360,7 @@ public class Classification {
 			 * @param received received value
 			 * @return
 			 */
-			double calcModifier(double expected, double received) {
+			private double calcModifier(double expected, double received) {
 				return learnRatio * (expected - received) * received * (1.0 - received);
 			}
 
