@@ -25,11 +25,11 @@ public class Classification {
 	 * @throws FileNotFoundException
 	 * @throws Classification.Vector.Reader.WrongNumbersCountException
 	 */
-	public Classification(String input, int size)
+	public Classification(String filename, int size)
 					throws FileNotFoundException,
 					Vector.Reader.WrongNumbersCountException {
 		this.n = size - 1;
-		Vector.Reader.Result readerResult = Vector.Reader.readFromFile(input, n);
+		Vector.Reader.Result readerResult = Vector.Reader.readFromFile(filename, n);
 
 		neuralNetwork = readerResult.getNN();
 		vectors = readerResult.getVectors();
