@@ -287,36 +287,9 @@ public class Classification {
 		 * @param input
 		 * @return
 		 */
-		int classify(Vector input) {
-			setInput(input);
-			return getOutput();
-		}
-
-		/**
-		 *
-		 * @param input
-		 */
-		void setInput(Vector input) {
-			for (Integer nxtKey : neurons.keySet()) {
-				neurons.get(nxtKey).setInput(input);
-			}
-		}
-
-		/**
-		 *
-		 * @return
-		 */
-		int getOutput() {
-			double max = 0;
-			int choice = 0;
-			for (Integer nxtKey : neurons.keySet()) {
-				double tmp = neurons.get(nxtKey).getOutput();
-				if (tmp >= max) {
-					max = tmp;
-					choice = nxtKey;
-				}
-			}
-			return choice;
+		public int classify(Vector input) {
+			neurons.setInput(input);
+			return neurons.getOutput();
 		}
 
 		/**
@@ -484,7 +457,35 @@ public class Classification {
 				public void add(int expected) {
 					if (!contains(expected)) {
 						this.put(expected, new Neuron(expected, inputLength, learnRatio));
+
+				/**
+				 * Sets each neuron's input
+				 * 
+				 * @param input input vector
+				 */
+				public void setInput(Vector input) {
+					for (Integer nxtKey : keySet()) {
+						get(nxtKey).setInput(input);
 					}
+				}
+
+				/**
+				 * Compares values returned by neurons based on inputs previously set 
+				 * and choses the most relevant vector class.
+				 * 
+				 * @return most relevant vector class
+				 */
+				public int getOutput() {
+					double max = 0;
+					int choice = 0;
+					for (Integer nxtKey : keySet()) {
+						double tmp = get(nxtKey).getOutput();
+						if (tmp > max) {
+							max = tmp;
+							choice = nxtKey;
+						}
+					}
+					return choice;
 				}
 			}
 		}
