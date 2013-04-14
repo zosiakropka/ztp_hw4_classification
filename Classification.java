@@ -101,12 +101,9 @@ public class Classification {
 			public static Result readFromFile(String filename, int n)
 							throws FileNotFoundException, WrongNumbersCountException {
 
-				String regexp = "\\D+";
-
 				Result result = new Result(n);
 
 				File file = new File(filename);
-//				Scanner sc = new Scanner(file).useDelimiter(regexp);
 				Scanner sc = new Scanner(file);
 				while (sc.hasNext()) {
 					int classId = sc.nextInt();
