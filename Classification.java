@@ -179,7 +179,7 @@ public class Classification {
 				 * @param n vector size
 				 */
 				public Result(int n) {
-					neuralNetwork = new NeuralNetwork(n, 0.5);
+					neuralNetwork = new NeuralNetwork(n, 0.2);
 					vectors = new Vectors();
 				}
 
