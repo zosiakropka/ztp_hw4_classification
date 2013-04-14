@@ -46,8 +46,9 @@ W nauczonej sieci każdy neuron po otrzymaniu wektora wejściowego do klasyfikac
 zwraca wartość z zakresu [0, 1], określającą prawdopodobieństwo, że badany 
 wektor należy do klasy reprezentowanej przez ten neuron. Klasa, którą 
 reprezentuje neuron zwracający najwyższą wartość, zostaje uznana za klasę 
-wektora badanego. Wartości wyjściowe neuronów stanowią sumę iloczynów wartości 
-na wejściu i odpowiadających im wag.
+wektora badanego. Sieć neuronowa zwraca wartość najbardziej trafionej klasy. 
+Wartości wyjściowe neuronów stanowią sumę iloczynów wartości na wejściu i 
+odpowiadających im wag.
 
 
 Proces uczenia polega na regulacji wag każdego z wejść neuronów.  Początkowe 
