@@ -349,14 +349,8 @@ public class Classification {
 				double output = getOutput();
 				double expected = (probe.getExpected() == cls) ? 1.0 : 0.0;
 				double modifier = calcModifier(expected, output);
-				Iterator<Double> it = input.iterator();
-				for (int i = 0; i < inputLength; i++) {
-					if (it.hasNext()) {
-						double nxtInput = it.next();
-						weights[i] += nxtInput * modifier;
-					}
-				}
-				biasWeight += modifier;
+
+				adjustWeights(modifier);
 			}
 
 			/**
@@ -376,6 +370,18 @@ public class Classification {
 			 *
 			 * @param modifier
 			 */
+			private void adjustWeights(double modifier) {
+
+				Iterator<Double> it = input.iterator();
+				for (int i = 0; i < inputLength; i++) {
+					if (it.hasNext()) {
+						double nxtInput = it.next();
+						weights[i] += nxtInput * modifier;
+					}
+				}
+				bias += modifier;
+			}
+
 			/**
 			 * Sets given vector for learning or recognizing reasons.
 			 *
