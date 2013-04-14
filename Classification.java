@@ -118,7 +118,7 @@ public class Classification {
 
 				File file = new File(filename);
 				Scanner sc = new Scanner(file);
-				while (sc.hasNext()) {
+				while (sc.hasNextInt()) {
 					int classId = sc.nextInt();
 					Vector vector = scanVector(sc, n);
 					if (classId != 0) {
@@ -141,7 +141,7 @@ public class Classification {
 							throws WrongNumbersCountException {
 				Vector vector = new Vector();
 				for (int i = 0; i < n; i++) {
-					if (!sc.hasNext()) {
+					if (!sc.hasNextInt()) {
 						throw new WrongNumbersCountException();
 					}
 					vector.addInt(sc.nextInt());
