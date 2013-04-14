@@ -302,7 +302,7 @@ public class Classification {
 		 */
 		static class Neuron {
 
-			int cl;
+			private int cls;
 			int inputLength;
 			double[] weights;
 			Vector input;
@@ -318,8 +318,8 @@ public class Classification {
 			 * @param learnRatio learn ratio as described earlier in NeuralNetwork
 			 * constructor.
 			 */
-			public Neuron(int cl, int inputLength, double learnRatio) {
-				this.cl = cl;
+			public Neuron(int cls, int inputLength, double learnRatio) {
+				this.cls = cls;
 				this.inputLength = inputLength;
 				this.learnRatio = learnRatio;
 
@@ -342,7 +342,7 @@ public class Classification {
 
 				setInput(probe.getVector());
 				double output = getOutput();
-				double expected = (probe.getExpected()==cl)?1:0;
+				double expected = (probe.getExpected() == cls) ? 1.0 : 0.0;
 				double modifier = calcModifier(expected, output);
 				Iterator<Double> it = input.iterator();
 				for (int i = 0; i < inputLength; i++) {
