@@ -440,7 +440,14 @@ public class Classification {
 				}
 
 				/**
+				 * Adds to layer neuron for next vector class
+				 * 
+				 * @param expected
 				 */
+				public void add(int expected) {
+					if (!containsKey(expected)) {
+						this.put(expected, new Neuron(expected, inputLength, learnRatio));
+					}
 				}
 
 				/**
