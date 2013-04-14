@@ -206,11 +206,6 @@ public class Classification {
 		 */
 		public static class Vectors extends ArrayList<Vector> {
 
-			/**
-			 *
-			 */
-			public Vectors() {
-			}
 			static final long serialVersionUID = 1;
 		}
 	}
@@ -222,8 +217,6 @@ public class Classification {
 	 */
 	public static class NeuralNetwork {
 
-		int inputLength;
-		double learnRatio;
 		private ArrayList<Probe> probes;
 		private Neuron.Layer neurons;
 
@@ -272,7 +265,7 @@ public class Classification {
 		public void addProbe(Probe probe) {
 			probes.add(probe);
 			Integer cl = probe.getExpected();
-			if (!neurons.contains(cl)) {
+			if (!neurons.containsKey(cl)) {
 				neurons.add(cl);
 			}
 		}
@@ -286,8 +279,6 @@ public class Classification {
 		 * weights values.
 		 */
 		public NeuralNetwork(int inputLength, double learnRatio) {
-			this.learnRatio = learnRatio;
-			this.inputLength = inputLength;
 			this.probes = new ArrayList<>();
 			neurons = new Neuron.Layer(inputLength, learnRatio);
 		}
@@ -402,7 +393,8 @@ public class Classification {
 				Iterator<Double> it = input.iterator();
 				for (int i = 0; i < inputLength; i++) {
 					if (it.hasNext()) {
-						tmp += (it.next() * weights[i]);
+						double next = it.next();
+						tmp += (next * weights[i]);
 					}
 				}
 				return activationFunction(tmp);
@@ -440,12 +432,7 @@ public class Classification {
 				}
 
 				/**
-				 *
-				 * @param cl
-				 * @return
 				 */
-				public boolean contains(Integer cl) {
-					return containsKey(cl);
 				}
 
 				/**
@@ -458,9 +445,6 @@ public class Classification {
 						get(nxtKey).learn(probe);
 					}
 				}
-				public void add(int expected) {
-					if (!contains(expected)) {
-						this.put(expected, new Neuron(expected, inputLength, learnRatio));
 
 				/**
 				 * Sets each neuron's input
