@@ -76,9 +76,22 @@ public class Classification {
 				normalized = new Vector();
 				double min = Collections.min(this);
 				double max = Collections.max(this);
-//			if (min > max) max = min;
 				for (Double val : this) {
-					normalized.add((val-min) / (max-min));
+					double nrm;
+					if (min == max) {
+						if (val < 0) {
+							nrm = -1.0;
+						} else if (val == 0) {
+							nrm = 0.0;
+						} else {
+							nrm = 1.0;
+						}
+					} else if (-min > max) {
+						nrm = val / (-min);
+					} else {
+						nrm = val / max;
+					}
+					normalized.add(nrm);
 				}
 			}
 			return normalized;
