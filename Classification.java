@@ -185,7 +185,7 @@ public class Classification {
 
 				/**
 				 *
-				 * @return
+				 * @return neural network based on learning vectors scanned from file
 				 */
 				public NeuralNetwork getNN() {
 					return neuralNetwork;
@@ -193,7 +193,7 @@ public class Classification {
 
 				/**
 				 *
-				 * @return
+				 * @return testing vectors scanned from file
 				 */
 				public Vectors getVectors() {
 					return vectors;
@@ -284,9 +284,10 @@ public class Classification {
 		}
 
 		/**
+		 * Classifies vector.
 		 *
-		 * @param input
-		 * @return
+		 * @param input vector to classified
+		 * @return recognized class
 		 */
 		public int classify(Vector input) {
 			neurons.setInput(input);
@@ -303,6 +304,7 @@ public class Classification {
 		}
 
 		/**
+		 * Class representing single neuron.
 		 */
 		private static class Neuron {
 
